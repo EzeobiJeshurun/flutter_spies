@@ -1,9 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import './finalScreen.dart';
 
-import './question.dart';
-import './answer.dart';
+//import './question.dart';
+//import './answer.dart';
+import './qiuz.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,7 +27,11 @@ class MyAppState extends State<MyApp>{
     setState((){
       questionIndex = questionIndex + 1;
     });
-    
+    if(questionIndex< questions.length){
+      print('Questions remaining');
+    }else{
+      print('No more questions. Congratulations');
+    }
     print(questionIndex);
   }
  @override
@@ -35,15 +41,9 @@ class MyAppState extends State<MyApp>{
       appBar: AppBar(
         title: Text('Quiz'),
       ),
-      body: Column(
-        children: <Widget>[
-          Question(questions[questionIndex]['myquestion']),
-          ...(questions[questionIndex]['answers'] as List<String>).map((qes){
-            return Answer(answeredQuestion, qes);
-          }).toList()
-         
-        ],
-      ),
+      body: questionIndex < questions.length ? Quiz(
+        answerFunction: answeredQuestion, problemQuestion: questions,indexOfQuestion: questionIndex,
+        ) : FinalScreen(),
     ),);
   }
 }
