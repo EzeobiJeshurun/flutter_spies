@@ -15,6 +15,11 @@ class MyApp extends StatefulWidget{
 
 
 class MyAppState extends State<MyApp>{
+  
+   final questions = const [{'myquestion':'how old was he?', 'answers':['1','2','3','4']}, 
+  {'myquestion':'Does he live in Nigeria?', 'answers':['yes', 'No', 'No Idea', 'before']},
+  {'myquestion':'Is he a footballer?', 'answers':['yes, plays foy Enyimba', 'yes, plays fo Manchester', 'No', 'Not sure']}];
+
    int questionIndex = 0;
   void answeredQuestion(){
     setState((){
@@ -25,21 +30,18 @@ class MyAppState extends State<MyApp>{
   }
  @override
   Widget build(BuildContext context) {
-    var questions = ['how old was he?', 
-  'Does he live in Nigeria?',
-  'Is he a footballer?'];
-
+   
     return MaterialApp(home: Scaffold(
       appBar: AppBar(
         title: Text('Quiz'),
       ),
       body: Column(
         children: <Widget>[
-          Question(questions[questionIndex]),
-          Answer(answeredQuestion),
-          Answer(answeredQuestion),
-          Answer(answeredQuestion),
-          Answer(answeredQuestion),
+          Question(questions[questionIndex]['myquestion']),
+          ...(questions[questionIndex]['answers'] as List<String>).map((qes){
+            return Answer(answeredQuestion, qes);
+          }).toList()
+         
         ],
       ),
     ),);
