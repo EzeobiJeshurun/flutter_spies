@@ -18,12 +18,32 @@ class MyApp extends StatefulWidget{
 
 class MyAppState extends State<MyApp>{
   
-   final questions = const [{'myquestion':'how old was he?', 'answers':['1','2','3','4']}, 
-  {'myquestion':'Does he live in Nigeria?', 'answers':['yes', 'No', 'No Idea', 'before']},
-  {'myquestion':'Is he a footballer?', 'answers':['yes, plays foy Enyimba', 'yes, plays fo Manchester', 'No', 'Not sure']}];
+   final questions = const [
+    {'myquestion':'how old was he?', 
+   'answers':[{'text':'1', 'score':10},
+   {'text':'2', 'score':0},
+   {'text':'3','score':0},
+   {'text':'4','score':0}]}, 
+
+  {'myquestion':'Does he live in Nigeria?', 
+  'answers':[{'text':'yes','score': 0}, 
+  {'text':'No', 'score':0},
+   {'text':'No Idea', 'score':10}, 
+   {'text':'before','score':0}]},
+
+  {'myquestion':'Is he a footballer?', 
+  'answers':[{'text':'yes, plays foy Enyimba','score':0}, 
+  {'text':'yes, plays fo Manchester', 'score':0},
+  {'text':'No', 'score':0}, 
+  {'text':'Not sure', 'score':10}]}
+  
+  ];
 
    int questionIndex = 0;
-  void answeredQuestion(){
+   int totalScore = 0;
+  void answeredQuestion(int score){
+    // adds the score of the selected answers;
+    totalScore += score;
     setState((){
       questionIndex = questionIndex + 1;
     });
@@ -43,7 +63,7 @@ class MyAppState extends State<MyApp>{
       ),
       body: questionIndex < questions.length ? Quiz(
         answerFunction: answeredQuestion, problemQuestion: questions,indexOfQuestion: questionIndex,
-        ) : FinalScreen(),
+        ) : FinalScreen(totalScore),
     ),);
   }
 }
